@@ -1,7 +1,6 @@
 package com.easyjava.bean;
 
 
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +16,10 @@ public class TableInfo {
     private String comment;
     //字段信息
     private List<FieldInfo> fieldList;
+    //扩展字段信息
+    private List<FieldInfo> fieldExtendList;
     //唯一索引集合
-    private Map<String,List<FieldInfo>> keyIndexMap = new LinkedHashMap<>();
+    private Map<String, List<FieldInfo>> keyIndexMap = new LinkedHashMap<>();
     //是否有date类型
     private Boolean haveDate;
     //是否有时间类型
@@ -97,5 +98,13 @@ public class TableInfo {
 
     public void setHaveBigDecimal(Boolean haveBigDecimal) {
         this.haveBigDecimal = haveBigDecimal;
+    }
+
+    public List<FieldInfo> getFieldExtendList() {
+        return fieldExtendList;
+    }
+
+    public void setFieldExtendList(List<FieldInfo> fieldExtendList) {
+        this.fieldExtendList = fieldExtendList;
     }
 }

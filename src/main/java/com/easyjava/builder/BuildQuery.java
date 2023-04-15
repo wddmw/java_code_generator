@@ -53,7 +53,6 @@ public class BuildQuery {
             bw.write("public class " + className + " {");
             bw.newLine();
 
-            List<FieldInfo> extendList = new ArrayList<>();
             for (FieldInfo field : tableInfo.getFieldList()) {
                 //构建字段注解
                 BuildComment.createFieldComment(bw, field.getComment());
@@ -68,10 +67,6 @@ public class BuildQuery {
                     bw.newLine();
                     bw.newLine();
 
-                    FieldInfo fuzzyField = new FieldInfo();
-                    fuzzyField.setJavaType(field.getJavaType());
-                    fuzzyField.setPropertyName(propertyName);
-                    extendList.add(fuzzyField);
                 }
 
                 //日期类型
@@ -84,40 +79,11 @@ public class BuildQuery {
                     bw.newLine();
                     bw.newLine();
 
-                    FieldInfo timeStartField = new FieldInfo();
-                    timeStartField.setJavaType("String");
-                    timeStartField.setPropertyName(field.getPropertyName() + Constants.SUFFIX_BEAN_QUERY_TIME_START);
-                    extendList.add(timeStartField);
-
-                    FieldInfo timeEndField = new FieldInfo();
-                    timeEndField.setJavaType("String");
-                    timeEndField.setPropertyName(field.getPropertyName() + Constants.SUFFIX_BEAN_QUERY_TIME_END);
-                    extendList.add(timeEndField);
                 }
             }
 
-            List<FieldInfo> fieldInfoList = tableInfo.getFieldList();
-            fieldInfoList.addAll(extendList);
-            //get set方法
-            for (FieldInfo field : fieldInfoList) {
-                String tempField = StringUtils.uperCaseFirstLetter(field.getPropertyName());
-                bw.write("\tpublic void set" + tempField + "(" + field.getJavaType() + " " + field.getPropertyName() + ") {");
-                bw.newLine();
-                bw.write("\t\tthis." + field.getPropertyName() + " = " + field.getPropertyName() + ";");
-                bw.newLine();
-                bw.write("\t}");
-                bw.newLine();
-                bw.newLine();
-
-                bw.write("\tpublic " + field.getJavaType() + " get" + tempField + "() {");
-                bw.newLine();
-                bw.write("\t\treturn this." + field.getPropertyName() + ";");
-                bw.newLine();
-                bw.write("\t}");
-                bw.newLine();
-                bw.newLine();
-            }
-
+            buildGetSet(bw,tableInfo.getFieldList());
+            buildGetSet(bw,tableInfo.getFieldExtendList());
 
             bw.write("}");
             bw.flush();
@@ -145,6 +111,27 @@ public class BuildQuery {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+    //构建get set方法
+    private static void buildGetSet(BufferedWriter bw,List<FieldInfo> fieldInfoList) throws Exception{
+        for (FieldInfo field : fieldInfoList) {
+            String tempField = StringUtils.uperCaseFirstLetter(field.getPropertyName());
+            bw.write("\tpublic void set" + tempField + "(" + field.getJavaType() + " " + field.getPropertyName() + ") {");
+            bw.newLine();
+            bw.write("\t\tthis." + field.getPropertyName() + " = " + field.getPropertyName() + ";");
+            bw.newLine();
+            bw.write("\t}");
+            bw.newLine();
+            bw.newLine();
+
+            bw.write("\tpublic " + field.getJavaType() + " get" + tempField + "() {");
+            bw.newLine();
+            bw.write("\t\treturn this." + field.getPropertyName() + ";");
+            bw.newLine();
+            bw.write("\t}");
+            bw.newLine();
+            bw.newLine();
         }
     }
 }

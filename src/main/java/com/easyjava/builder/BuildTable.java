@@ -110,6 +110,8 @@ public class BuildTable {
         ResultSet fieldResult = null;
 
         List<FieldInfo> fieldInfoList = new ArrayList<>();
+
+        List<FieldInfo> fieldExtendList = new ArrayList<>();
         try {
             ps = conn.prepareStatement(String.format(SQL_SHOW_TABLE_FIELDS, tableInfo.getTableName()));
             fieldResult = ps.executeQuery();
@@ -148,11 +150,39 @@ public class BuildTable {
                 if (ArrayUtils.contains(Constants.SQL_DECIMAL_TYPES, type)) {
                     haveBigDecimal = true;
                 }
+                //String类型添加扩展属性
+                if(ArrayUtils.contains(Constants.SQL_STRING_TYPES,type)){
+                    FieldInfo fuzzyField = new FieldInfo();
+                    fuzzyField.setJavaType(fieldInfo.getJavaType());
+                    fuzzyField.setPropertyName(propertyName + Constants.SUFFIX_BEAN_QUERY_FUZZY);
+                    fuzzyField.setFieldName(fieldInfo.getFieldName());
+                    fuzzyField.setSqlType(type);
+                    fieldExtendList.add(fuzzyField);
+                }
+                //日期类型添加扩展属性
+                if(ArrayUtils.contains(Constants.SQL_DATE_TIME_TYPES, type) || ArrayUtils.contains(Constants.SQL_DATE_TYPES, type)){
+
+                    FieldInfo timeStartField = new FieldInfo();
+                    timeStartField.setJavaType("String");
+                    timeStartField.setPropertyName(propertyName + Constants.SUFFIX_BEAN_QUERY_TIME_START);
+                    timeStartField.setFieldName(fieldInfo.getFieldName());
+                    timeStartField.setSqlType(type);
+                    fieldExtendList.add(timeStartField);
+
+                    FieldInfo timeEndField = new FieldInfo();
+                    timeEndField.setJavaType("String");
+                    timeEndField.setPropertyName(propertyName + Constants.SUFFIX_BEAN_QUERY_TIME_END);
+                    timeEndField.setFieldName(fieldInfo.getFieldName());
+                    timeEndField.setSqlType(type);
+                    fieldExtendList.add(timeEndField);
+                }
             }
             tableInfo.setHaveDateTime(haveDateTime);
             tableInfo.setHaveDate(haveDate);
             tableInfo.setHaveBigDecimal(haveBigDecimal);
             tableInfo.setFieldList(fieldInfoList);
+            //加入扩展的属性
+            tableInfo.setFieldExtendList(fieldExtendList);
         } catch (Exception e) {
             logger.error("读取字段失败", e);
         } finally {
