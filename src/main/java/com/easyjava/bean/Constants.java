@@ -16,16 +16,21 @@ public class Constants {
     public static String PATH_QUERY;
     public static String PATH_UTILS;
     public static String PATH_ENUMS;
+    public static String PATH_MAPPERS;
+
 
     public static String PACKAGE_BASE;
     public static String PACKAGE_PO;
     public static String PACKAGE_QUERY;
     public static String PACKAGE_UTILS;
     public static String PACKAGE_ENUMS;
+    public static String PACKAGE_MAPPERS;
 
     public static String SUFFIX_BEAN_QUERY_FUZZY;
     public static String SUFFIX_BEAN_QUERY_TIME_START;
     public static String SUFFIX_BEAN_QUERY_TIME_END;
+    public static String SUFFIX_MAPPERS;
+
 
     //需要忽略的属性
     public static String IGNORE_BEAN_TOJSON_FILED;
@@ -49,6 +54,7 @@ public class Constants {
         SUFFIX_BEAN_QUERY_FUZZY = (PropertiesUtils.getString("suffix.bean.query.fuzzy"));
         SUFFIX_BEAN_QUERY_TIME_START = (PropertiesUtils.getString("suffix.bean.query.time.start"));
         SUFFIX_BEAN_QUERY_TIME_END = (PropertiesUtils.getString("suffix.bean.query.time.end"));
+        SUFFIX_MAPPERS = (PropertiesUtils.getString("suffix.mappers"));
 
         PACKAGE_BASE = PropertiesUtils.getString("package.base");
         //PO
@@ -56,6 +62,7 @@ public class Constants {
         PACKAGE_QUERY = PACKAGE_BASE + "." + PropertiesUtils.getString("package.query");
         PACKAGE_UTILS = PACKAGE_BASE + "." + PropertiesUtils.getString("package.utils");
         PACKAGE_ENUMS = PACKAGE_BASE + "." + PropertiesUtils.getString("package.enums");
+        PACKAGE_MAPPERS = PACKAGE_BASE + "." + PropertiesUtils.getString("package.mappers");
 
         PATH_BASE = PropertiesUtils.getString("path.base");
         PATH_BASE = PATH_BASE + PATH_JAVA ;
@@ -64,6 +71,7 @@ public class Constants {
         PATH_QUERY = PATH_BASE + "/" + PACKAGE_QUERY.replace(".","/");
         PATH_UTILS = PATH_BASE + "/" + PACKAGE_UTILS.replace(".","/");
         PATH_ENUMS = PATH_BASE + "/" + PACKAGE_ENUMS.replace(".","/");
+        PATH_MAPPERS = PATH_BASE + "/" + PACKAGE_MAPPERS.replace(".","/");
 
 
         IGNORE_BEAN_TOJSON_FILED= PropertiesUtils.getString("ignore.bean.tojson.filed");
