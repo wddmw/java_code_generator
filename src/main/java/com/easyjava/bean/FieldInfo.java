@@ -60,7 +60,6 @@ public class FieldInfo {
     public boolean getIsAutoIncrement() {
         return isAutoIncrement;
     }
-
     public void setIsAutoIncrement(boolean isAutoIncrement) {
         this.isAutoIncrement = isAutoIncrement;
     }

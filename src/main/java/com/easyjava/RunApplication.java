@@ -1,3 +1,5 @@
+package com.easyjava;
+
 import com.easyjava.bean.TableInfo;
 import com.easyjava.builder.*;
 
