@@ -10,7 +10,7 @@ public interface BaseMapper<T, P> {
      * @param t
      * @return
      */
-    Long insert(@Param("bean") T t);
+    Integer insert(@Param("bean") T t);
 
     /**
      * 插入或者更新
@@ -18,7 +18,7 @@ public interface BaseMapper<T, P> {
      * @param t
      * @return
      */
-    Long insertOrUpdate(@Param("bean") T t);
+    Integer insertOrUpdate(@Param("bean") T t);
 
     /**
      * 批量插入
@@ -26,7 +26,7 @@ public interface BaseMapper<T, P> {
      * @param list
      * @return
      */
-    Long insertBatch(@Param("list") List<T> list);
+    Integer insertBatch(@Param("list") List<T> list);
 
     /**
      * 批量插入或者更新
@@ -34,7 +34,7 @@ public interface BaseMapper<T, P> {
      * @param list
      * @return
      */
-    Long insertOrUpdateBatch(@Param("list") List<T> list);
+    Integer insertOrUpdateBatch(@Param("list") List<T> list);
 
     /**
      * 根据参数查询集合
@@ -50,5 +50,5 @@ public interface BaseMapper<T, P> {
      * @param p
      * @return
      */
-    Long selectCount(@Param("query") P p);
+    Integer selectCount(@Param("query") P p);
 }

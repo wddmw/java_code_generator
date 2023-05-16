@@ -1,6 +1,7 @@
 package com.easyjava.builder;
 
 import com.easyjava.bean.Constants;
+import com.sun.org.apache.bcel.internal.Const;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,32 +17,71 @@ public class BuildBase {
 
         //生成date枚举
         headerInfoList.add("package " + Constants.PACKAGE_ENUMS);
-        build(headerInfoList,"DateTimePatternEnum", Constants.PATH_ENUMS);
+        build(headerInfoList, "DateTimePatternEnum", Constants.PATH_ENUMS);
 
         headerInfoList.clear();
         headerInfoList.add("package " + Constants.PACKAGE_UTILS);
-        build(headerInfoList,"DateUtils", Constants.PATH_UTILS);
+        build(headerInfoList, "DateUtils", Constants.PATH_UTILS);
 
         //生成baseMapper
         headerInfoList.clear();
         headerInfoList.add("package " + Constants.PACKAGE_MAPPERS);
-        build(headerInfoList,"BaseMapper", Constants.PATH_MAPPERS);
+        build(headerInfoList, "BaseMapper", Constants.PATH_MAPPERS);
 
         //生成PageSize枚举
         headerInfoList.clear();
         headerInfoList.add("package " + Constants.PACKAGE_ENUMS);
-        build(headerInfoList,"PageSize", Constants.PATH_ENUMS);
+        build(headerInfoList, "PageSize", Constants.PATH_ENUMS);
 
         //生成SimplePage
         headerInfoList.clear();
         headerInfoList.add("package " + Constants.PACKAGE_QUERY);
-        headerInfoList.add("import "+ Constants.PACKAGE_ENUMS +".PageSize;");
-        build(headerInfoList,"SimplePage", Constants.PATH_QUERY);
+        headerInfoList.add("import " + Constants.PACKAGE_ENUMS + ".PageSize;");
+        build(headerInfoList, "SimplePage", Constants.PATH_QUERY);
 
         //生成BaseQuery
         headerInfoList.clear();
         headerInfoList.add("package " + Constants.PACKAGE_QUERY);
-        build(headerInfoList,"BaseQuery", Constants.PATH_QUERY);
+        build(headerInfoList, "BaseQuery", Constants.PATH_QUERY);
+
+        //生成PaginationResultVO
+        headerInfoList.clear();
+        headerInfoList.add("package " + Constants.PACKAGE_VO);
+        build(headerInfoList, "PaginationResultVO", Constants.PATH_VO);
+
+        //生成exception
+        headerInfoList.clear();
+        headerInfoList.add("package " + Constants.PACKAGE_EXCEPTION);
+        headerInfoList.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum;");
+        build(headerInfoList, "BusinessException", Constants.PATH_EXCEPTION);
+
+        //生成ResponseCodeEnum
+        headerInfoList.clear();
+        headerInfoList.add("package " + Constants.PACKAGE_ENUMS);
+        build(headerInfoList, "ResponseCodeEnum", Constants.PATH_ENUMS);
+
+        //生成ABaseController
+        headerInfoList.clear();
+        headerInfoList.add("package " + Constants.PACKAGE_CONTROLLER);
+        headerInfoList.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum");
+        headerInfoList.add("import " + Constants.PACKAGE_VO + ".ResponseVO");
+        build(headerInfoList, "ABaseController", Constants.PATH_CONTROLLER);
+
+
+        //生成ResponseVO
+        headerInfoList.clear();
+        headerInfoList.add("package " + Constants.PACKAGE_VO);
+        build(headerInfoList, "ResponseVO", Constants.PATH_VO);
+
+        //生成AGlobalExceptionHandleController
+        headerInfoList.clear();
+        headerInfoList.add("package " + Constants.PACKAGE_CONTROLLER);
+        headerInfoList.add("import " + Constants.PACKAGE_VO + ".ResponseVO");
+        headerInfoList.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum");
+        headerInfoList.add("import " + Constants.PACKAGE_EXCEPTION + ".BusinessException");
+        build(headerInfoList, "AGlobalExceptionHandleController", Constants.PATH_CONTROLLER);
+
+
     }
 
     private static void build(List<String> headerInfoList, String fileName, String outPutPath) {
@@ -72,8 +112,8 @@ public class BuildBase {
             in = new FileInputStream(templatePath);
             inr = new InputStreamReader(in, "utf-8");
             bf = new BufferedReader(inr);
-            for(String head:headerInfoList){
-                bw.write(head+";");
+            for (String head : headerInfoList) {
+                bw.write(head + ";");
                 bw.newLine();
 
                 bw.newLine();
